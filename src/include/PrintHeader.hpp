@@ -5,8 +5,8 @@
 void PrintHeader (void)
 {
 	std::time_t time = std::time(NULL);
-    char strTime[100];
-    std::strftime(strTime, sizeof(strTime), "%d/%m/%y", std::localtime(&time));
+    char strTime[11];
+    std::strftime(strTime, sizeof(strTime), "%d/%m/%Y", std::localtime(&time));
     
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN | FOREGROUND_INTENSITY );
 	std::cout << "\n========================================\n";
@@ -16,7 +16,7 @@ void PrintHeader (void)
 	std::cout << "=                                      =\n";
 	std::cout << "========================================\n";
 	std::cout << "=                                      =\n";
-	std::cout << "=               " << strTime << "               =\n";
+	std::cout << "=              " << strTime << "              =\n";
 	std::cout << "=                                      =\n";
 	std::cout << "========================================\n";
 	std::cout << "=                                      =\n";
