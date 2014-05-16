@@ -4,28 +4,23 @@
 #include <string>
 
 #ifndef _PRINTHEADER_
-	#define _PRINTHEADER_
-	#include "include/PrintHeader.hpp"
+	#include "include/PrintHeader.h"
 #endif
 
 #ifndef _CELL_
-	#define _CELL_
-	#include "include/Cell.hpp"
+	#include "include/Cell.h"
 #endif
 
 #ifndef _VECTOR_
-	#define _VECTOR_
-	#include "include/Vector.hpp"
+	#include "include/Vector.h"
 #endif
 
 #ifndef _FILE_
-	#define _FILE_
-	#include "include/File.hpp"
+	#include "include/File.h"
 #endif
 
 #ifndef _PUZZLE_
-	#define _PUZZLE_
-	#include "include/Puzzle.hpp"
+	#include "include/Puzzle.h"
 #endif
 
 using namespace std;

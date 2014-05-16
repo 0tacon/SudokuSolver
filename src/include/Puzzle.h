@@ -6,19 +6,18 @@
 #include <algorithm>
 
 #ifndef _CELL_
-	#define _CELL_
-	#include "Cell.hpp"
+	#include "Cell.h"
 #endif
 
 #ifndef _VECTOR_
-	#define _VECTOR_
-	#include "Vector.hpp"
+	#include "Vector.h"
 #endif
 
 #ifndef _FILE_
-	#define _FILE_
-	#include "File.hpp"
+	#include "File.h"
 #endif
+
+#define _PUZZLE_
 
 enum category_t { ROW, COL, BLK };
 

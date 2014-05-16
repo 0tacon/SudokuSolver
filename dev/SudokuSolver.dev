@@ -61,7 +61,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit3]
-FileName=C:\Users\Daniel.Daniels_Laptop\dev\cppprojects\SudokuSolver\src\include\File.hpp
+FileName=..\src\include\File.h
 CompileCpp=1
 Folder=Headers
 Compile=1
@@ -71,7 +71,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit2]
-FileName=C:\Users\Daniel.Daniels_Laptop\dev\cppprojects\SudokuSolver\src\include\Cell.hpp
+FileName=..\src\include\Cell.h
 CompileCpp=1
 Folder=Headers
 Compile=1
@@ -81,7 +81,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit4]
-FileName=C:\Users\Daniel.Daniels_Laptop\dev\cppprojects\SudokuSolver\src\include\PrintHeader.hpp
+FileName=..\src\include\PrintHeader.h
 CompileCpp=1
 Folder=Headers
 Compile=1
@@ -91,7 +91,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit5]
-FileName=C:\Users\Daniel.Daniels_Laptop\dev\cppprojects\SudokuSolver\src\include\Puzzle.hpp
+FileName=..\src\include\Puzzle.h
 CompileCpp=1
 Folder=Headers
 Compile=1
@@ -101,7 +101,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit6]
-FileName=C:\Users\Daniel.Daniels_Laptop\dev\cppprojects\SudokuSolver\src\include\Vector.hpp
+FileName=..\src\include\Vector.h
 CompileCpp=1
 Folder=Headers
 Compile=1

@@ -4,9 +4,10 @@
 #include <fstream>
 
 #ifndef _CELL_
-	#define _CELL_
-	#include "Cell.hpp"
+	#include "Cell.h"
 #endif
+
+#define _FILE_
 
 std::vector<unsigned int> ReadFileIntoVect (std::string &filename)
 {

@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 
+#define _CELL_
+
 class Cell 
 {
 	public:
