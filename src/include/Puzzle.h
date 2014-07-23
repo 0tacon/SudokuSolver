@@ -1,3 +1,24 @@
+/*
+
+Copyright 2014 Daniel Forde
+
+This file is part of ProjectEuler.
+
+SudokuSolver is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+SudokuSolver is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with SudokuSolver.  If not, see <http://www.gnu.org/licenses/>.
+
+*/
+
 #include <windows.h>
 #include <iostream>
 #include <vector>
@@ -54,16 +75,16 @@ void PrintPuzzle (std::vector<Cell> Cells)
 void DiagnosePuzzle (std::vector<Cell> Cells)
 {
 	bool IDsValid = true, ValsValid = true, SolvedValid = true;
-	
+
 	for ( std::vector<Cell>::iterator CurrentCell = Cells.begin() ; CurrentCell != Cells.end() ; CurrentCell++ )
 	{
 		if ( CurrentCell->id>=80 && CurrentCell->id<=0 ) IDsValid = false;
-				
+
 		for ( std::vector<unsigned int>::iterator val = CurrentCell->val.begin() ; val != CurrentCell->val.end() ; val++ )
 		{
 			if ( *val>=9 && *val<=1 ) ValsValid = false;
 		}
-		
+
 		if ( CurrentCell->val.size()==1 )
 		{
 			if ( !CurrentCell->solved ) SolvedValid = false;
@@ -73,7 +94,7 @@ void DiagnosePuzzle (std::vector<Cell> Cells)
 			if ( CurrentCell->solved ) SolvedValid = false;
 		}
 	}
-	
+
 	if ( !IDsValid || !ValsValid || !SolvedValid )
 	{
 		if ( !IDsValid ) std::cout << "\nOne or more cells have invalid IDs\n";
@@ -86,12 +107,12 @@ void DiagnosePuzzle (std::vector<Cell> Cells)
 unsigned int NumberSolved (std::vector<Cell> Cells)
 {
 	unsigned int NumSolved=0;
-	
+
 	for ( std::vector<Cell>::iterator Cell = Cells.begin() ; Cell != Cells.end() ; Cell++ )
 	{
 		if ( Cell->solved ) NumSolved++;
 	}
-	
+
 	return NumSolved;
 }
 
@@ -160,26 +181,26 @@ bool PotentialValueFrequencyAnalysis ( std::vector<Cell> &Cells, unsigned int &c
 {
 	std::vector<unsigned int> cellIDs, possibleValues;
 	Cell* CurrentCell = &Cells.at(0);
-	
+
 	for ( unsigned int i=0 ; i<Cells.size() ; i++ )
 	{
 		CurrentCell = &Cells.at(i);
-		
+
 		if ( !CurrentCell->solved )
 		{
 			if ( category==BLK ) cellIDs = GetOtherUnsolvedCells (Cells, CurrentCell->blk, category, CurrentCell->id);
 			else if ( category==ROW ) cellIDs = GetOtherUnsolvedCells (Cells, CurrentCell->y, category, CurrentCell->id);
 			else if ( category==COL ) cellIDs = GetOtherUnsolvedCells (Cells, CurrentCell->x, category, CurrentCell->id);
-			
+
 			possibleValues = GetAllPossibleValues ( Cells, cellIDs );
-			
+
 			if ( SolveCellIfUnityPossibleValFreq ( CurrentCell, possibleValues ) )
 			{
 				cellIDs.clear();
 				possibleValues.clear();
 				return true;
 			}
-			
+
 			cellIDs.clear();
 			possibleValues.clear();
 		}
@@ -192,7 +213,7 @@ void PossibleValueElimination (std::vector<Cell> &Cells, unsigned int &count)
 	std::vector<unsigned int> cellIDs;
 	std::vector<unsigned int>::iterator possibleVals;
 	bool potentialValRemoval = true;
-	
+
 	while ( potentialValRemoval )
 	{
 		potentialValRemoval = false;
@@ -203,20 +224,20 @@ void PossibleValueElimination (std::vector<Cell> &Cells, unsigned int &count)
 			if ( !(CurrentCell->solved) )
 			{
 				cellIDs = GetSolvedCells (Cells, CurrentCell->id);
-				
+
 				for ( std::vector<unsigned int>::iterator id = cellIDs.begin() ; id != cellIDs.end() ; id++ )
 				{
 					// Remove the other cell's value from the current cell's possible values
 					possibleVals = CurrentCell->val.begin();
 					while ( ( *possibleVals != Cells.at(*id).val.at(0) ) && ( possibleVals != CurrentCell->val.end() ) ) possibleVals++;
-					if ( possibleVals != CurrentCell->val.end() ) 
+					if ( possibleVals != CurrentCell->val.end() )
 					{
 						CurrentCell->val.erase(possibleVals);
 						potentialValRemoval = true;
 					}
 					if ( CurrentCell->val.size() == 1 ) CurrentCell->solved = true;
 				}
-				
+
 				count++;
 			}
 		}
@@ -229,29 +250,29 @@ void SolvePuzzle (std::vector<Cell> &Cells, std::string filename)
 	unsigned int prevNumSolved=0, newNumSolved=1, originalNumSolved = NumberSolved (Cells), algorithmCount=0, cellAnalysisCount=0, id=0, val=0;
 	std::chrono::time_point<std::chrono::system_clock> start, end;
 	bool potentialValRemoval = true;
-	
+
 	std::cout << "\n" << originalNumSolved << " cells have given values\n";
-	
+
 	start = std::chrono::system_clock::now();
-	
+
 	// Continue as long as cells are being solved
 	while ( newNumSolved>prevNumSolved && NumberSolved(Cells)!=81 )
 	{
-		prevNumSolved = NumberSolved (Cells);		
-		
+		prevNumSolved = NumberSolved (Cells);
+
 		PossibleValueElimination (Cells, cellAnalysisCount);
 		PotentialValueFrequencyAnalysis (Cells, cellAnalysisCount, BLK);
 		PossibleValueElimination (Cells, cellAnalysisCount);
 		PotentialValueFrequencyAnalysis (Cells, cellAnalysisCount, ROW);
 		PossibleValueElimination (Cells, cellAnalysisCount);
 		PotentialValueFrequencyAnalysis (Cells, cellAnalysisCount, COL);
-		
+
 		newNumSolved = NumberSolved (Cells);
 		algorithmCount++;
 	}
-	
+
 	end = std::chrono::system_clock::now();
-	
+
 	std::cout << "\nAnalysis complete in " << (static_cast<std::chrono::duration<double> >((end-start))).count() << " seconds\n";
 	std::cout << "\nThe algorithm executed " << algorithmCount << " times\n";
 	std::cout << "\n" << cellAnalysisCount << " individual cell analyses were completed\n";
@@ -264,6 +285,6 @@ void SolvePuzzle (std::vector<Cell> &Cells, std::string filename)
 	{
 		std::cout << "\nThe puzzle has been successfully solved\n";
 		std::cout << (char)(7);
-		WriteSolFile (Cells, filename);		
+		WriteSolFile (Cells, filename);
 	}
 }
